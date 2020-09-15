@@ -1,0 +1,28 @@
+language: generic
+sudo: required
+
+services:
+    - docker
+
+before_install:
+    - docker build -t shooresh/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true shooresh/react-test npm test
+
+after_success:
+    - docker build -t shooresh/multi-client ./client 
+    - docker build -t shooresh/multi-nginx ./nginx
+    - docker build -t shooresh/multi-server ./server 
+    - docker build -t shooresh/multi-worker ./worker 
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push shooresh/multi-client
+    - docker push shooresh/multi-nginx
+    - docker push shooresh/multi-server
+    - docker push shooresh/multi-worker
+
+
+
+
+
+
