@@ -5,21 +5,21 @@ services:
     - docker
 
 before_install:
-    - docker build -t shooresh/react-test -f ./client/Dockerfile.dev ./client
+    - docker build -t shooreshg/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-    - docker run -e CI=true shooresh/react-test npm test
+    - docker run -e CI=true shooreshg/react-test npm test
 
 after_success:
-    - docker build -t shooresh/multi-client ./client 
-    - docker build -t shooresh/multi-nginx ./nginx
-    - docker build -t shooresh/multi-server ./server 
-    - docker build -t shooresh/multi-worker ./worker 
+    - docker build -t shooreshg/multi-client ./client 
+    - docker build -t shooreshg/multi-nginx ./nginx
+    - docker build -t shooreshg/multi-server ./server 
+    - docker build -t shooreshg/multi-worker ./worker 
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-    - docker push shooresh/multi-client
-    - docker push shooresh/multi-nginx
-    - docker push shooresh/multi-server
-    - docker push shooresh/multi-worker
+    - docker push shooreshg/multi-client
+    - docker push shooreshg/multi-nginx
+    - docker push shooreshg/multi-server
+    - docker push shooreshg/multi-worker
 
 
 
