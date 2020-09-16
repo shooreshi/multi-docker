@@ -21,7 +21,18 @@ after_success:
     - docker push shooreshg/multi-server
     - docker push shooreshg/multi-worker
 
-
+deploy:
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    provider: elasticbeanstalk
+    region: eu-west-2
+    app: multi-docker
+    env: MultiDocker-env
+    bucket_name: elasticbeanstalk-eu-west-2-453259886180
+    bucket_path: docker-multi
+    on:
+        branch: master
+    
 
 
 
